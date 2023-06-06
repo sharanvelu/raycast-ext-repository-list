@@ -7,6 +7,7 @@
     "author": "sharan",
     "license": "MIT",
     "owner": "sharan-",
+    "access": "public",
     "categories": [
         "Applications",
         "Data",
