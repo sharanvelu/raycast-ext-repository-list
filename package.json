@@ -5,6 +5,8 @@
   "description": "A Simple Repository List",
   "icon": "icon.png",
   "author": "sharan",
+  "owner": "sharan-",
+  "access": "public",
   "license": "MIT",
   "commands": [
     {
