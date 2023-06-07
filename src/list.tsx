@@ -93,7 +93,7 @@ export default function() {
         .filter((repository) => {
           return state.filter === "All" || repository.provider === state.filter;
         })
-        .map((repository, index) => (
+        .map((repository) => (
           <RepositoryListItem
             repository={repository}
             searchText={state.searchText}
