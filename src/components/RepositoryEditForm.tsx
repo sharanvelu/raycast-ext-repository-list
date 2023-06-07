@@ -9,7 +9,8 @@ function RepositoryEditForm(props: {
   const { repository, onEdit } = props;
   const { pop } = useNavigation();
 
-  const handleSubmit = useCallback((values: { name: string; url: string; provider: string }) => {
+  const handleSubmit = useCallback(
+    (values: { name: string; url: string; provider: string }) => {
       onEdit(repository.id, values.name, values.url, values.provider);
       pop();
     },
@@ -25,7 +26,6 @@ function RepositoryEditForm(props: {
         </ActionPanel>
       }
     >
-
       <Form.TextField id="name" defaultValue={repository.name} title="Name" />
 
       <Form.Dropdown id="provider" title="Provider" defaultValue={repository.provider}>

@@ -4,7 +4,7 @@ import { List, LocalStorage } from "@raycast/api";
 import { Repository, State, InitialState, Provider } from "./types";
 import { EmptyView, RepositoryListItem } from "./components";
 
-export default function() {
+function RepositoryList() {
   const [state, setState] = useState<State>(InitialState);
 
   useEffect(() => {
@@ -39,7 +39,8 @@ export default function() {
     [state.repositories, setState]
   );
 
-  const handleEdit = useCallback((id: string, name: string, url: string, provider: string) => {
+  const handleEdit = useCallback(
+    (id: string, name: string, url: string, provider: string) => {
       let newRepositories = [...state.repositories];
       newRepositories = newRepositories.filter((repository) => {
         return repository.id !== id;
@@ -105,3 +106,5 @@ export default function() {
     </List>
   );
 }
+
+export default RepositoryList;

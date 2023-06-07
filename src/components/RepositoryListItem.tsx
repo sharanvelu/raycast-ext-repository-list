@@ -1,4 +1,4 @@
-import { Repository, Provider, State } from "../types";
+import { Repository, Provider } from "../types";
 import { Action, ActionPanel, Icon, List } from "@raycast/api";
 import { RepositoryAddAction, RepositoryRemoveAction, RepositoryEditAction } from "./index";
 
@@ -8,7 +8,6 @@ function RepositoryListItem(props: {
   onAdd: (name: string, url: string, provider: string) => void;
   onEdit: (repositoryId: string, name: string, url: string, provider: string) => void;
   onRemove: (repositoryId: string) => void;
-  state?: State
 }) {
   const { repository, searchText, onAdd, onEdit, onRemove } = props;
 

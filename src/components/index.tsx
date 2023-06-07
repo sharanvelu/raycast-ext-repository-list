@@ -16,5 +16,5 @@ export {
   EmptyView,
   RepositoryListItem,
   RepositoryEditAction,
-  RepositoryEditForm
+  RepositoryEditForm,
 };
