@@ -1,7 +1,20 @@
-import RepositoryAddAction from "./RepositoryAddAction";
-import RepositoryAddForm from "./RepositoryAddForm";
-import RepositoryRemoveAction from "./RepositoryRemoveAction";
 import EmptyView from "./EmptyView";
 import RepositoryListItem from "./RepositoryListItem";
 
-export { RepositoryAddAction, RepositoryAddForm, RepositoryRemoveAction, EmptyView, RepositoryListItem };
+import RepositoryAddAction from "./RepositoryAddAction";
+import RepositoryAddForm from "./RepositoryAddForm";
+
+import RepositoryEditAction from "./RepositoryEditAction";
+import RepositoryEditForm from "./RepositoryEditForm";
+
+import RepositoryRemoveAction from "./RepositoryRemoveAction";
+
+export {
+  RepositoryAddAction,
+  RepositoryAddForm,
+  RepositoryRemoveAction,
+  EmptyView,
+  RepositoryListItem,
+  RepositoryEditAction,
+  RepositoryEditForm
+};

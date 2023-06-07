@@ -1,34 +1,40 @@
 import { Repository, Provider, State } from "../types";
 import { Action, ActionPanel, Icon, List } from "@raycast/api";
-import { RepositoryAddAction, RepositoryRemoveAction } from "./index";
+import { RepositoryAddAction, RepositoryRemoveAction, RepositoryEditAction } from "./index";
 
 function RepositoryListItem(props: {
-  index: number;
   repository: Repository;
-  state: State;
+  searchText: string;
   onAdd: (name: string, url: string, provider: string) => void;
-  onRemove: (index: number) => void;
+  onEdit: (repositoryId: string, name: string, url: string, provider: string) => void;
+  onRemove: (repositoryId: string) => void;
+  state?: State
 }) {
-  const providerO = (providerKey: string): string => {
+  const { repository, searchText, onAdd, onEdit, onRemove } = props;
+
+  const getProvider = (providerKey: string): string => {
     const provider = Provider.find((provider) => provider.key === providerKey);
     return provider?.name ?? "-";
   };
 
   return (
     <List.Item
-      key={props.repository.id}
-      title={props.repository.name}
-      // subtitle={providerO(props.repository.provider)}
-      subtitle={providerO(props.repository.provider)}
+      id={repository.id}
+      key={repository.id}
+      title={repository.name}
+      subtitle={getProvider(repository.provider)}
       actions={
         <ActionPanel>
           <ActionPanel.Section>
-            <Action.OpenInBrowser url={props.repository.url} title="Open Repository" icon={Icon.Globe} />
-            <Action.CopyToClipboard content={props.repository.url} />
+            <Action.OpenInBrowser url={repository.url} title="Open Repository" icon={Icon.Globe} />
+            <Action.CopyToClipboard content={repository.url} />
           </ActionPanel.Section>
           <ActionPanel.Section>
-            <RepositoryAddAction defaultTitle={props.state.searchText} onAdd={props.onAdd} />
-            <RepositoryRemoveAction onRemove={() => props.onRemove(props.index)} />
+            <RepositoryEditAction repository={repository} onEdit={onEdit} />
+          </ActionPanel.Section>
+          <ActionPanel.Section>
+            <RepositoryAddAction defaultTitle={searchText} onAdd={onAdd} />
+            <RepositoryRemoveAction repositoryId={repository.id} onRemove={onRemove} />
           </ActionPanel.Section>
         </ActionPanel>
       }

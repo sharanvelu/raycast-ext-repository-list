@@ -4,7 +4,7 @@ import { List, LocalStorage } from "@raycast/api";
 import { Repository, State, InitialState, Provider } from "./types";
 import { EmptyView, RepositoryListItem } from "./components";
 
-export default function () {
+export default function() {
   const [state, setState] = useState<State>(InitialState);
 
   useEffect(() => {
@@ -39,11 +39,26 @@ export default function () {
     [state.repositories, setState]
   );
 
-  const handleRemove = useCallback(
-    (index: number) => {
-      const newRepositories = [...state.repositories];
+  const handleEdit = useCallback((id: string, name: string, url: string, provider: string) => {
+      let newRepositories = [...state.repositories];
+      newRepositories = newRepositories.filter((repository) => {
+        return repository.id !== id;
+      });
+      newRepositories.push({ id, name, url, provider });
 
-      setState((previous) => ({ ...previous, repositories: newRepositories.splice(index, 1) }));
+      setState((previous) => ({ ...previous, repositories: newRepositories, searchText: "", filter: "All" }));
+    },
+    [state.repositories, setState]
+  );
+
+  const handleRemove = useCallback(
+    (id: string) => {
+      let newRepositories = [...state.repositories];
+      newRepositories = newRepositories.filter((repository) => {
+        return repository.id !== id;
+      });
+
+      setState((previous) => ({ ...previous, repositories: newRepositories }));
     },
     [state.repositories, setState]
   );
@@ -80,11 +95,11 @@ export default function () {
         })
         .map((repository, index) => (
           <RepositoryListItem
-            index={index}
             repository={repository}
-            state={state}
+            searchText={state.searchText}
             onAdd={handleAdd}
-            onRemove={() => handleRemove(index)}
+            onEdit={handleEdit}
+            onRemove={handleRemove}
           />
         ))}
     </List>

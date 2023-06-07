@@ -1,12 +1,12 @@
 import { Action, Icon } from "@raycast/api";
 
-function RepositoryRemoveAction(props: { onRemove: () => void }) {
+function RepositoryRemoveAction(props: { repositoryId: string, onRemove: (id: string) => void }) {
   return (
     <Action
       icon={Icon.Trash}
       title="Remove Repository"
-      shortcut={{ modifiers: ["cmd"], key: "delete" }}
-      onAction={props.onRemove}
+      shortcut={{ modifiers: ["ctrl"], key: "x" }}
+      onAction={() => props.onRemove(props.repositoryId)}
     />
   );
 }
