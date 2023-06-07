@@ -5,7 +5,7 @@ import RepositoryAddAction from "./RepositoryAddAction";
 function EmptyView(props: {
   repositories: Repository[];
   searchText: string;
-  onAdd: (name: string, url: string) => void;
+  onAdd: (name: string, url: string, provider: string) => void;
 }) {
   if (props.repositories.length > 0) {
     return (

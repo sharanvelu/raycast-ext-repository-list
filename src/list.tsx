@@ -1,11 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { nanoid } from "nanoid";
-import { ActionPanel, Action, List, LocalStorage, Icon } from "@raycast/api";
-import { Repository, State } from "./types";
-import InitialState from "./types";
-import { RepositoryAddAction, RepositoryRemoveAction, EmptyView } from "./components";
+import { List, LocalStorage } from "@raycast/api";
+import { Repository, State, InitialState, Provider } from "./types";
+import { EmptyView, RepositoryListItem } from "./components";
 
-export default function () {
+export default function() {
   const [state, setState] = useState<State>(InitialState);
 
   useEffect(() => {
@@ -31,19 +30,18 @@ export default function () {
     LocalStorage.setItem("repositories", JSON.stringify(state.repositories));
   }, [state.repositories]);
 
-  const handleAdd = useCallback(
-    (name: string, url: string) => {
-      const newRepositories = [...state.repositories, { id: nanoid(), name, url }];
-      setState((previous) => ({ ...previous, repositories: newRepositories, searchText: "" }));
+  const handleAdd = useCallback((name: string, url: string, provider: string) => {
+      const newRepositories = [...state.repositories, { id: nanoid(), name, url, provider }];
+
+      setState((previous) => ({ ...previous, repositories: newRepositories, searchText: "", filter: "All" }));
     },
     [state.repositories, setState]
   );
 
-  const handleRemove = useCallback(
-    (index: number) => {
+  const handleRemove = useCallback((index: number) => {
       const newRepositories = [...state.repositories];
-      newRepositories.splice(index, 1);
-      setState((previous) => ({ ...previous, repositories: newRepositories }));
+
+      setState((previous) => ({ ...previous, repositories: newRepositories.splice(index, 1) }));
     },
     [state.repositories, setState]
   );
@@ -58,28 +56,36 @@ export default function () {
       onSearchTextChange={(newValue) => {
         setState((previous) => ({ ...previous, searchText: newValue }));
       }}
+      searchBarAccessory={
+        <List.Dropdown
+          tooltip="Select Repository Provider"
+          value={state.filter}
+          onChange={(newValue) => setState((previous) => ({ ...previous, filter: newValue }))}
+        >
+          <List.Dropdown.Item title="All" value={"All"} />
+
+          {Provider.map((value) => {
+            return <List.Dropdown.Item title={value.name} value={value.key} />;
+          })}
+        </List.Dropdown>
+      }
     >
       <EmptyView repositories={state.repositories} searchText={state.searchText} onAdd={handleAdd} />
 
-      {state.repositories.map((repository, index) => (
-        <List.Item
-          key={repository.id}
-          title={repository.name}
-          subtitle={repository.url}
-          actions={
-            <ActionPanel>
-              <ActionPanel.Section>
-                <Action.OpenInBrowser url={repository.url} title="Open Repository" icon={Icon.Globe} />
-                <Action.CopyToClipboard content={repository.url} />
-              </ActionPanel.Section>
-              <ActionPanel.Section>
-                <RepositoryAddAction defaultTitle={state.searchText} onAdd={handleAdd} />
-                <RepositoryRemoveAction onRemove={() => handleRemove(index)} />
-              </ActionPanel.Section>
-            </ActionPanel>
-          }
-        />
-      ))}
+      {state.repositories
+        .filter((repository) => {
+          return state.filter === "All" || repository.provider === state.filter;
+        })
+        .map((repository, index) => (
+          <RepositoryListItem
+            index={index}
+            repository={repository}
+            state={state}
+            onAdd={handleAdd}
+            onRemove={() => handleRemove(index)}
+          />
+        ))}
     </List>
-  );
+  )
+    ;
 }

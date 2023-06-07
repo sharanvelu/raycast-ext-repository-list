@@ -1,7 +1,10 @@
 import { Action, Icon } from "@raycast/api";
 import RepositoryAddForm from "./RepositoryAddForm";
 
-function RepositoryAddAction(props: { defaultTitle?: string; onAdd: (name: string, url: string) => void }) {
+function RepositoryAddAction(props: {
+  defaultTitle?: string;
+  onAdd: (name: string, url: string, provider: string) => void
+}) {
   return (
     <Action.Push
       icon={Icon.Plus}
