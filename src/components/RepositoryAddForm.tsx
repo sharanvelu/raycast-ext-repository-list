@@ -4,7 +4,7 @@ import { Provider } from "../types";
 
 function RepositoryAddForm(props: {
   defaultTitle?: string;
-  onCreate: (name: string, url: string, provider: string) => void
+  onCreate: (name: string, url: string, provider: string) => void;
 }) {
   const { onCreate, defaultTitle = "" } = props;
   const { pop } = useNavigation();

@@ -3,7 +3,7 @@ import RepositoryAddForm from "./RepositoryAddForm";
 
 function RepositoryAddAction(props: {
   defaultTitle?: string;
-  onAdd: (name: string, url: string, provider: string) => void
+  onAdd: (name: string, url: string, provider: string) => void;
 }) {
   return (
     <Action.Push

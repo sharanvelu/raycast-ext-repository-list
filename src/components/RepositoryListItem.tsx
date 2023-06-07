@@ -3,15 +3,14 @@ import { Action, ActionPanel, Icon, List } from "@raycast/api";
 import { RepositoryAddAction, RepositoryRemoveAction } from "./index";
 
 function RepositoryListItem(props: {
-  index: number,
-  repository: Repository,
-  state: State,
-  onAdd: (name: string, url: string, provider: string) => void,
-  onRemove: (index: number) => void
+  index: number;
+  repository: Repository;
+  state: State;
+  onAdd: (name: string, url: string, provider: string) => void;
+  onRemove: (index: number) => void;
 }) {
-
   const providerO = (providerKey: string): string => {
-    const provider = Provider.find(provider => provider.key === providerKey);
+    const provider = Provider.find((provider) => provider.key === providerKey);
     return provider?.name ?? "-";
   };
 

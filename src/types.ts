@@ -18,7 +18,7 @@ const InitialState = {
   searchText: "",
   filter: "All",
   repositories: [],
-  visibleRepositories: []
+  visibleRepositories: [],
 };
 
 const Provider = [
@@ -27,7 +27,7 @@ const Provider = [
   { key: "bitbucket", name: "Bitbucket" },
   { key: "aws-code-commit", name: "AWS CodeCommit" },
   { key: "git-bucket", name: "GitBucket" },
-  { key: "others", name: "Others" }
+  { key: "others", name: "Others" },
 ];
 
 export { InitialState, Provider };
