@@ -11,3 +11,7 @@
 ## [Version 1.2] - 2023-06-07
 
 - Added option to Edit a Repository
+
+## [version 1.3] - 2023-06-08
+
+- Updated Icons
