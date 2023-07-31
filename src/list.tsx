@@ -110,7 +110,7 @@ function RepositoryList() {
 
       {state.repositories
         .sort((a) => {
-          return 9999 - a.priority;
+          return a.priority;
         })
         .filter((repository) => {
           return state.filter === "All" || repository.provider === state.filter;
