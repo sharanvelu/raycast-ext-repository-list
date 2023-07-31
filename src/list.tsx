@@ -58,7 +58,7 @@ function RepositoryList() {
       const currentRepository = newRepositories.filter((repository) => {
         return repository.id === id;
       })[0];
-      currentRepository.priority = currentRepository.priority + 1;
+      currentRepository.priority = (currentRepository.priority ?? 0) + 1;
 
       newRepositories = newRepositories.filter((repository) => {
         return repository.id !== id;
