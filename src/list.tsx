@@ -82,6 +82,18 @@ function RepositoryList() {
     [state.repositories, setState]
   );
 
+  const handleResetPriority = useCallback(
+    () => {
+      const newRepositories = [...state.repositories];
+      newRepositories.map((repository) => {
+        repository.priority = 0;
+      });
+
+      setState((previous) => ({ ...previous, repositories: newRepositories }));
+    },
+    [state.repositories, setState]
+  );
+
   return (
     <List
       isLoading={state.isLoading}
@@ -123,6 +135,7 @@ function RepositoryList() {
             onEdit={handleEdit}
             onRemove={handleRemove}
             onOpen={handleOpen}
+            onResetPriority={handleResetPriority}
           />
         ))}
     </List>

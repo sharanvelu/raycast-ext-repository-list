@@ -9,8 +9,9 @@ function RepositoryListItem(props: {
   onEdit: (repositoryId: string, name: string, url: string, provider: string) => void;
   onRemove: (repositoryId: string) => void;
   onOpen: (repositoryId: string) => void;
+  onResetPriority: () => void;
 }) {
-  const { repository, searchText, onAdd, onEdit, onRemove, onOpen } = props;
+  const { repository, searchText, onAdd, onEdit, onRemove, onOpen, onResetPriority } = props;
 
   const getProvider = (providerKey: string): string => {
     const provider = Provider.find((provider) => provider.key === providerKey);
@@ -40,6 +41,12 @@ function RepositoryListItem(props: {
           <ActionPanel.Section>
             <RepositoryAddAction defaultTitle={searchText} onAdd={onAdd} />
             <RepositoryRemoveAction repositoryId={repository.id} onRemove={onRemove} />
+            <Action
+              icon={Icon.ArrowClockwise}
+              title="Reset Ranking"
+              shortcut={{ modifiers: ["ctrl"], key: "r" }}
+              onAction={onResetPriority}
+            />
           </ActionPanel.Section>
         </ActionPanel>
       }
