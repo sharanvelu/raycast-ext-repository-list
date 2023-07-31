@@ -22,7 +22,7 @@ function RepositoryEditForm(props: {
       navigationTitle={"Add Repository"}
       actions={
         <ActionPanel>
-          <Action.SubmitForm title="Add Repository" onSubmit={handleSubmit} />
+          <Action.SubmitForm title="Update Repository" onSubmit={handleSubmit} />
         </ActionPanel>
       }
     >

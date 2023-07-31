@@ -8,8 +8,9 @@ function RepositoryListItem(props: {
   onAdd: (name: string, url: string, provider: string) => void;
   onEdit: (repositoryId: string, name: string, url: string, provider: string) => void;
   onRemove: (repositoryId: string) => void;
+  onOpen: (repositoryId: string) => void;
 }) {
-  const { repository, searchText, onAdd, onEdit, onRemove } = props;
+  const { repository, searchText, onAdd, onEdit, onRemove, onOpen } = props;
 
   const getProvider = (providerKey: string): string => {
     const provider = Provider.find((provider) => provider.key === providerKey);
@@ -25,7 +26,12 @@ function RepositoryListItem(props: {
       actions={
         <ActionPanel>
           <ActionPanel.Section>
-            <Action.OpenInBrowser url={repository.url} title="Open Repository" icon={Icon.Globe} />
+            <Action.OpenInBrowser
+              url={repository.url}
+              title="Open Repository"
+              icon={Icon.Globe}
+              onOpen={() => onOpen(repository.id)}
+            />
             <Action.CopyToClipboard content={repository.url} />
           </ActionPanel.Section>
           <ActionPanel.Section>

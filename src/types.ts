@@ -3,6 +3,7 @@ interface Repository {
   name: string;
   provider: string;
   url: string;
+  priority: number;
 }
 
 type State = {

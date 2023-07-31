@@ -32,7 +32,7 @@ function RepositoryList() {
 
   const handleAdd = useCallback(
     (name: string, url: string, provider: string) => {
-      const newRepositories = [...state.repositories, { id: nanoid(), name, url, provider }];
+      const newRepositories = [...state.repositories, { id: nanoid(), name, url, provider, priority: 0 }];
 
       setState((previous) => ({ ...previous, repositories: newRepositories, searchText: "", filter: "All" }));
     },
@@ -45,7 +45,25 @@ function RepositoryList() {
       newRepositories = newRepositories.filter((repository) => {
         return repository.id !== id;
       });
-      newRepositories.push({ id, name, url, provider });
+      newRepositories.push({ id, name, url, provider, priority: 0 });
+
+      setState((previous) => ({ ...previous, repositories: newRepositories, searchText: "", filter: "All" }));
+    },
+    [state.repositories, setState]
+  );
+
+  const handleOpen = useCallback(
+    (id: string) => {
+      let newRepositories = [...state.repositories];
+      const currentRepository = newRepositories.filter((repository) => {
+        return repository.id === id;
+      })[0];
+      currentRepository.priority = currentRepository.priority + 1;
+
+      newRepositories = newRepositories.filter((repository) => {
+        return repository.id !== id;
+      });
+      newRepositories.push(currentRepository);
 
       setState((previous) => ({ ...previous, repositories: newRepositories, searchText: "", filter: "All" }));
     },
@@ -91,6 +109,9 @@ function RepositoryList() {
       <EmptyView repositories={state.repositories} searchText={state.searchText} onAdd={handleAdd} />
 
       {state.repositories
+        .sort((a) => {
+          return 9999 - a.priority;
+        })
         .filter((repository) => {
           return state.filter === "All" || repository.provider === state.filter;
         })
@@ -101,6 +122,7 @@ function RepositoryList() {
             onAdd={handleAdd}
             onEdit={handleEdit}
             onRemove={handleRemove}
+            onOpen={handleOpen}
           />
         ))}
     </List>
