@@ -109,8 +109,8 @@ function RepositoryList() {
       <EmptyView repositories={state.repositories} searchText={state.searchText} onAdd={handleAdd} />
 
       {state.repositories
-        .sort((a) => {
-          return a.priority;
+        .sort((a, b) => {
+          return a.priority - b.priority;
         })
         .filter((repository) => {
           return state.filter === "All" || repository.provider === state.filter;
