@@ -73,7 +73,7 @@ function RepositoryListItem(props: {
               icon={Icon.Globe}
               onOpen={() => onOpen(repository.id)}
             />
-            <Action.CopyToClipboard content={repository.url} />
+            <Action.CopyToClipboard content={repository.url} shortcut={{ modifiers: ["cmd"], key: "c" }} />
           </ActionPanel.Section>
           <ActionPanel.Section>
             <RepositoryEditAction repository={repository} onEdit={onEdit} />
