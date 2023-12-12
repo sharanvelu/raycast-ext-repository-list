@@ -62,14 +62,16 @@ function RepositoryListItem(props: {
             <Action.OpenInBrowser
               url={getPullRequestURL(repository)}
               title="Open Pull Request"
-              shortcut={{ modifiers: ["ctrl"], key: "p" }}
+              shortcut={{ modifiers: ["opt"], key: "p" }}
               icon={Icon.Globe}
+              onOpen={() => onOpen(repository.id)}
             />
             <Action.OpenInBrowser
               url={getNewPullRequestURL(repository)}
               title="New Pull Request"
-              shortcut={{ modifiers: ["ctrl"], key: "n" }}
+              shortcut={{ modifiers: ["opt"], key: "n" }}
               icon={Icon.Globe}
+              onOpen={() => onOpen(repository.id)}
             />
             <Action.CopyToClipboard content={repository.url} />
           </ActionPanel.Section>
